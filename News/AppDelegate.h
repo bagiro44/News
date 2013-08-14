@@ -7,6 +7,8 @@
 //
 
 #import <UIKit/UIKit.h>
+#import "RSSParser.h"
+#import "ViewController.h"
 
 @interface AppDelegate : UIResponder <UIApplicationDelegate>
 
