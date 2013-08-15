@@ -36,17 +36,16 @@
     {
         return nil;
     }
-    
-    NSString *const kDataBaseFileName = @"rss.sqlite";
-    NSFileManager *fileManager = [NSFileManager defaultManager];
+    NSError *error = nil;
+    NSString *const kDataBaseFileName = @"rssManaged.sqlite";
     NSArray *paths = NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES);
     NSString *documentDirectory = [paths objectAtIndex:0];
     NSString *dataBasePath = [documentDirectory stringByAppendingPathComponent:kDataBaseFileName];
     
-    if (![fileManager fileExistsAtPath:dataBasePath]) {
-        NSString *defaultDataBasePath = [[[NSBundle mainBundle] resourcePath] stringByAppendingPathComponent:kDataBaseFileName];
-        [fileManager copyItemAtPath:defaultDataBasePath toPath:dataBasePath error:nil];
-    }
+    NSManagedObjectModel *ObjectModel = [NSManagedObjectModel mergedModelFromBundles:nil];
+    NSPersistentStoreCoordinator *StoreCoordinator = [[NSPersistentStoreCoordinator alloc] initWithManagedObjectModel:ObjectModel];
+    [StoreCoordinator addPersistentStoreWithType:NSSQLiteStoreType configuration:Nil URL:[NSURL URLWithString:dataBasePath] options:nil error:&error];
+    
     
     FMDatabase *database = [FMDatabase databaseWithPath:dataBasePath];
     if (![database open])
