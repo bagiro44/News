@@ -28,19 +28,19 @@
     }
     
     FMDatabase *database = [FMDatabase databaseWithPath:dataBasePath];
-    if ([database open])
+    if (![database open])
     {
         database = nil;
-        NSLog(@"BAAD");
+        NSLog(@"Database not open.");
     }
     
-    NSInteger rowsCount = 0;
-    [FMDatabase setSharedInstance:database]; 
-    FMResultSet *result = [database executeQuery:@"select count(*) from rss"];
+    NSInteger rowsCount = 10;
+    [FMDatabase setSharedInstance:database];
+    /*FMResultSet *result = [database executeQuery:@"select count(*) from rss"];
     if ([result next])
     {
-        rowsCount = [result intForColumn:0];
-    }
+        rowsCount = [result intForColumnIndex:0];
+    }*/
     NSUserDefaults *userDefaults = [NSUserDefaults standardUserDefaults];
     EXFontName *fintName = [EXFontNames() objectAtIndex:0];
     NSNumber *size = [EXFontSizes() objectAtIndex:4];
@@ -55,10 +55,13 @@
     NSURL *url = [NSURL URLWithString:@"http://itdox.ru/feed/"];
     NSURLRequest *request = [NSURLRequest requestWithURL:url]; 
     [RSSParser parseRSSFeedForRequest:request success:^(NSArray *feedItems) {
+        NSLog(@"3");
         FMDatabase *database = [FMDatabase sharedInstance];
+        NSLog(@"2");
         for (RSSItem *item in feedItems)
         {
             NSMutableArray *parameters = [NSMutableArray arrayWithCapacity:10];
+            
             [parameters addObject:item.title];
             [parameters addObject:item.itemDescription];
             [parameters addObject:item.content];
@@ -69,6 +72,7 @@
             [parameters addObject:item.pubDate];
             [parameters addObject:item.author];
             [parameters addObject:item.guid ];
+            
             BOOL updateResult = [database executeUpdate:@"INSERT OR REPLACE INTO rss VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)" withArgumentsInArray:parameters];
             if (!updateResult)
             {
@@ -83,7 +87,7 @@
         ViewContr._newsContent = feedItems;
         [ViewContr.tableView reloadData];
         
-        self.window.rootViewController = NavigationController; 
+        self.window.rootViewController = NavigationController;
     } failure:^(NSError *error) {
         NSLog(@"%@", error);
         UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Problem" message:[error localizedDescription] delegate:nil cancelButtonTitle:@"OK'" otherButtonTitles:nil];

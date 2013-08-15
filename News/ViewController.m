@@ -25,11 +25,11 @@
     self.navigationItem.title = @"NewsDoc";
     [self reloadData];
     RSSItem *lastItem = [self._newsContent objectAtIndex:0];
-    /*NSTimeInterval interval  = [[NSDate date] timeIntervalSinceDate:lastItem.pubDate];
+    NSTimeInterval interval  = [[NSDate date] timeIntervalSinceDate:lastItem.pubDate];
     if (interval> 60*60*12)
     {
         [self RefreshData];
-    }*/
+    }
     
     
 }
@@ -127,6 +127,7 @@
     FMDatabase *database = [FMDatabase sharedInstance];
     NSMutableArray *results = [NSMutableArray array];
     FMResultSet *result = [database executeQuery:@"select * from rss order by pubDate desc"];
+    NSLog(@"1");
     while ([result next])
     {
         RSSItem *item = [[RSSItem alloc] init];
