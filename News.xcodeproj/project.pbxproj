@@ -10,6 +10,7 @@
 		77016C9417B0349A001D947F /* ImageCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 77016C9317B0349A001D947F /* ImageCell.m */; };
 		7742513C17BCBDC500BF8E77 /* UIScrollView+SVInfiniteScrolling.m in Sources */ = {isa = PBXBuildFile; fileRef = 7742513917BCBDC500BF8E77 /* UIScrollView+SVInfiniteScrolling.m */; };
 		7742513D17BCBDC500BF8E77 /* UIScrollView+SVPullToRefresh.m in Sources */ = {isa = PBXBuildFile; fileRef = 7742513B17BCBDC500BF8E77 /* UIScrollView+SVPullToRefresh.m */; };
+		7742513F17BCC0A500BF8E77 /* QuartzCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 7742513E17BCC0A500BF8E77 /* QuartzCore.framework */; };
 		77C6967917B01A48009B9F06 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 77C6967817B01A48009B9F06 /* UIKit.framework */; };
 		77C6967B17B01A48009B9F06 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 77C6967A17B01A48009B9F06 /* Foundation.framework */; };
 		77C6967D17B01A48009B9F06 /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 77C6967C17B01A48009B9F06 /* CoreGraphics.framework */; };
@@ -56,6 +57,7 @@
 		7742513917BCBDC500BF8E77 /* UIScrollView+SVInfiniteScrolling.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIScrollView+SVInfiniteScrolling.m"; sourceTree = "<group>"; };
 		7742513A17BCBDC500BF8E77 /* UIScrollView+SVPullToRefresh.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIScrollView+SVPullToRefresh.h"; sourceTree = "<group>"; };
 		7742513B17BCBDC500BF8E77 /* UIScrollView+SVPullToRefresh.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIScrollView+SVPullToRefresh.m"; sourceTree = "<group>"; };
+		7742513E17BCC0A500BF8E77 /* QuartzCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = QuartzCore.framework; path = System/Library/Frameworks/QuartzCore.framework; sourceTree = SDKROOT; };
 		77C6967517B01A48009B9F06 /* News.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = News.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		77C6967817B01A48009B9F06 /* UIKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = UIKit.framework; path = System/Library/Frameworks/UIKit.framework; sourceTree = SDKROOT; };
 		77C6967A17B01A48009B9F06 /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
@@ -128,6 +130,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				7742513F17BCC0A500BF8E77 /* QuartzCore.framework in Frameworks */,
 				77D6718517BBB6280044A857 /* libsqlite3.dylib in Frameworks */,
 				77C6967917B01A48009B9F06 /* UIKit.framework in Frameworks */,
 				77C6967B17B01A48009B9F06 /* Foundation.framework in Frameworks */,
@@ -154,6 +157,7 @@
 		77C6966C17B01A48009B9F06 = {
 			isa = PBXGroup;
 			children = (
+				7742513E17BCC0A500BF8E77 /* QuartzCore.framework */,
 				77D6718417BBB6280044A857 /* libsqlite3.dylib */,
 				77C6967E17B01A48009B9F06 /* News */,
 				77C6967717B01A48009B9F06 /* Frameworks */,
