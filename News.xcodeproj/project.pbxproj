@@ -11,6 +11,7 @@
 		7742513C17BCBDC500BF8E77 /* UIScrollView+SVInfiniteScrolling.m in Sources */ = {isa = PBXBuildFile; fileRef = 7742513917BCBDC500BF8E77 /* UIScrollView+SVInfiniteScrolling.m */; };
 		7742513D17BCBDC500BF8E77 /* UIScrollView+SVPullToRefresh.m in Sources */ = {isa = PBXBuildFile; fileRef = 7742513B17BCBDC500BF8E77 /* UIScrollView+SVPullToRefresh.m */; };
 		7742513F17BCC0A500BF8E77 /* QuartzCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 7742513E17BCC0A500BF8E77 /* QuartzCore.framework */; };
+		7742514217BCC28100BF8E77 /* DateData.m in Sources */ = {isa = PBXBuildFile; fileRef = 7742514117BCC28000BF8E77 /* DateData.m */; };
 		77C6967917B01A48009B9F06 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 77C6967817B01A48009B9F06 /* UIKit.framework */; };
 		77C6967B17B01A48009B9F06 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 77C6967A17B01A48009B9F06 /* Foundation.framework */; };
 		77C6967D17B01A48009B9F06 /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 77C6967C17B01A48009B9F06 /* CoreGraphics.framework */; };
@@ -34,7 +35,6 @@
 		77D6719517BBB66A0044A857 /* FMDatabaseQueue.m in Sources */ = {isa = PBXBuildFile; fileRef = 77D6718E17BBB66A0044A857 /* FMDatabaseQueue.m */; };
 		77D6719717BBB66A0044A857 /* FMResultSet.m in Sources */ = {isa = PBXBuildFile; fileRef = 77D6719117BBB66A0044A857 /* FMResultSet.m */; };
 		77D6719917BBBC610044A857 /* rss.sqlite in Resources */ = {isa = PBXBuildFile; fileRef = 77D6719817BBBC610044A857 /* rss.sqlite */; };
-		77D6719C17BBC6DE0044A857 /* FMDatabase+SharedInstance.m in Sources */ = {isa = PBXBuildFile; fileRef = 77D6719B17BBC6DE0044A857 /* FMDatabase+SharedInstance.m */; };
 		77F6D0B517B2E7AB008A50B6 /* DetailViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 77F6D0B417B2E7AB008A50B6 /* DetailViewController.m */; };
 		77F6D1D817B4547E008A50B6 /* AFHTTPClient.m in Sources */ = {isa = PBXBuildFile; fileRef = 77F6D1C617B4547E008A50B6 /* AFHTTPClient.m */; };
 		77F6D1D917B4547E008A50B6 /* AFHTTPRequestOperation.m in Sources */ = {isa = PBXBuildFile; fileRef = 77F6D1C817B4547E008A50B6 /* AFHTTPRequestOperation.m */; };
@@ -58,6 +58,8 @@
 		7742513A17BCBDC500BF8E77 /* UIScrollView+SVPullToRefresh.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIScrollView+SVPullToRefresh.h"; sourceTree = "<group>"; };
 		7742513B17BCBDC500BF8E77 /* UIScrollView+SVPullToRefresh.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIScrollView+SVPullToRefresh.m"; sourceTree = "<group>"; };
 		7742513E17BCC0A500BF8E77 /* QuartzCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = QuartzCore.framework; path = System/Library/Frameworks/QuartzCore.framework; sourceTree = SDKROOT; };
+		7742514017BCC28000BF8E77 /* DateData.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DateData.h; sourceTree = "<group>"; };
+		7742514117BCC28000BF8E77 /* DateData.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DateData.m; sourceTree = "<group>"; };
 		77C6967517B01A48009B9F06 /* News.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = News.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		77C6967817B01A48009B9F06 /* UIKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = UIKit.framework; path = System/Library/Frameworks/UIKit.framework; sourceTree = SDKROOT; };
 		77C6967A17B01A48009B9F06 /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
@@ -96,8 +98,6 @@
 		77D6719017BBB66A0044A857 /* FMResultSet.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = FMResultSet.h; path = fmdb/src/FMResultSet.h; sourceTree = "<group>"; };
 		77D6719117BBB66A0044A857 /* FMResultSet.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = FMResultSet.m; path = fmdb/src/FMResultSet.m; sourceTree = "<group>"; };
 		77D6719817BBBC610044A857 /* rss.sqlite */ = {isa = PBXFileReference; lastKnownFileType = file; name = rss.sqlite; path = ../../../rss.sqlite; sourceTree = "<group>"; };
-		77D6719A17BBC6DE0044A857 /* FMDatabase+SharedInstance.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "FMDatabase+SharedInstance.h"; sourceTree = "<group>"; };
-		77D6719B17BBC6DE0044A857 /* FMDatabase+SharedInstance.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "FMDatabase+SharedInstance.m"; sourceTree = "<group>"; };
 		77F6D0B317B2E7AB008A50B6 /* DetailViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DetailViewController.h; sourceTree = "<group>"; };
 		77F6D0B417B2E7AB008A50B6 /* DetailViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DetailViewController.m; sourceTree = "<group>"; };
 		77F6D1C517B4547E008A50B6 /* AFHTTPClient.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AFHTTPClient.h; sourceTree = "<group>"; };
@@ -191,8 +191,6 @@
 				77D6711E17BADD210044A857 /* EXConsts.m */,
 				77C6968717B01A48009B9F06 /* AppDelegate.h */,
 				77C6968817B01A48009B9F06 /* AppDelegate.m */,
-				77D6719A17BBC6DE0044A857 /* FMDatabase+SharedInstance.h */,
-				77D6719B17BBC6DE0044A857 /* FMDatabase+SharedInstance.m */,
 				77C6969017B01A48009B9F06 /* MainStoryboard.storyboard */,
 				77D6711717BA65500044A857 /* SplashScreenViewController.h */,
 				77D6711817BA65500044A857 /* SplashScreenViewController.m */,
@@ -202,6 +200,8 @@
 				77016C9317B0349A001D947F /* ImageCell.m */,
 				77C6969317B01A48009B9F06 /* ViewController.h */,
 				77C6969417B01A48009B9F06 /* ViewController.m */,
+				7742514017BCC28000BF8E77 /* DateData.h */,
+				7742514117BCC28000BF8E77 /* DateData.m */,
 				77D6710A17BA58EE0044A857 /* WebViewController.h */,
 				77D6710B17BA58EE0044A857 /* WebViewController.m */,
 				77D6711A17BADC110044A857 /* PickerViewController.h */,
@@ -405,9 +405,9 @@
 				77D6719417BBB66A0044A857 /* FMDatabasePool.m in Sources */,
 				77D6719517BBB66A0044A857 /* FMDatabaseQueue.m in Sources */,
 				77D6719717BBB66A0044A857 /* FMResultSet.m in Sources */,
-				77D6719C17BBC6DE0044A857 /* FMDatabase+SharedInstance.m in Sources */,
 				7742513C17BCBDC500BF8E77 /* UIScrollView+SVInfiniteScrolling.m in Sources */,
 				7742513D17BCBDC500BF8E77 /* UIScrollView+SVPullToRefresh.m in Sources */,
+				7742514217BCC28100BF8E77 /* DateData.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

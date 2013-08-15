@@ -8,11 +8,10 @@
 
 #import "ViewController.h"
 #import "ImageCell.h"
-#import "DetailViewController.h" 
-#import "RSSParser.h"
+#import "DetailViewController.h"
 #import "UIImageView+AFNetworking.h" 
-#import "FMDatabase+SharedInstance.h"
 #import "SVPullToRefresh.h"
+#import "DateData.h"
 
 @interface ViewController ()
 
@@ -24,24 +23,11 @@
 {
     [super viewDidLoad];
     self.navigationItem.title = @"NewsDoc";
-    [self reloadData];
-    RSSItem *lastItem = [self._newsContent objectAtIndex:0];
-    NSTimeInterval interval  = [[NSDate date] timeIntervalSinceDate:lastItem.pubDate];
-    if (interval> 60*60*12)
-    {
-        [self RefreshData];
-    }
     
-    [self.tableView addPullToRefreshWithActionHandler:^
-        {
-        double delayInSeconds = 2.0;
-        dispatch_time_t popTime = dispatch_time(DISPATCH_TIME_NOW, (int64_t)(delayInSeconds * NSEC_PER_SEC));
-        dispatch_after(popTime, dispatch_get_main_queue(), ^(void)
-            {
-                [self.tableView.pullToRefreshView stopAnimating];
-            });
+    [self.tableView addPullToRefreshWithActionHandler:^{
+        [self RefreshData];
     } position:(SVPullToRefreshPositionTop)];
-[self.tableView triggerPullToRefresh];
+    [self.tableView triggerPullToRefresh];
 
 }
 
@@ -87,78 +73,23 @@
     }
 }
 
-
-- (IBAction)refreshAction:(id)sender
-{
-    [self RefreshData];
-
-}
-
 -(void) RefreshData
 {
-    
-    //[[UIApplication sharedApplication] beginIgnoringInteractionEvents];
-    NSURL *url = [NSURL URLWithString:@"http://itdox.ru/feed/"];
-    NSURLRequest *request = [[NSURLRequest alloc] initWithURL:url];
-    [RSSParser parseRSSFeedForRequest:request success:^(NSArray *feedItems) {
-        //[[UIApplication sharedApplication] endIgnoringInteractionEvents];
-        /*self._newsContent = feedItems;*/
-        
-        FMDatabase *database = [FMDatabase sharedInstance];
-        for (RSSItem *item in feedItems)
-        {
-            NSMutableArray *parameters = [NSMutableArray arrayWithCapacity:10];
-            [parameters addObject:item.title];
-            [parameters addObject:item.itemDescription];
-            [parameters addObject:item.content];
-            [parameters addObject:[item.link  absoluteString]];
-            [parameters addObject:[item.commentsLink absoluteString]];
-            [parameters addObject:[item.commentsFeed absoluteString]];
-            [parameters addObject:item.commentsCount];
-            [parameters addObject:item.pubDate];
-            [parameters addObject:item.author];
-            [parameters addObject:item.guid ];
-            BOOL updateResult = [database executeUpdate:@"INSERT OR REPLACE INTO rss VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)" withArgumentsInArray:parameters];
-            if (!updateResult)
-            {
-                NSLog(@"Failed: %@ ", [database lastError]);
-            }
-        }
-        [self reloadData];
-    } failure:^(NSError *error) {
-        //[[UIApplication sharedApplication] endIgnoringInteractionEvents];
+    [[DateData sharedInstance] fetchRssFeedCashedBlock:^(NSArray *result) {
+        self._newsContent = result;
+        [self.tableView reloadData];
+    } successBlock:^(NSArray *result) {
+        [self.tableView.pullToRefreshView stopAnimating];
+        self._newsContent = result;
+        [self.tableView reloadData];
+    } failureBlock:^(NSError *error) {
         NSLog(@"%@", error);
         UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:@"Ошибка" message:[error localizedDescription] delegate:nil cancelButtonTitle:@"OK" otherButtonTitles:nil];
         [alertView show];
     }];
 }
 
--(void) reloadData
-{
-    FMDatabase *database = [FMDatabase sharedInstance];
-    NSMutableArray *results = [NSMutableArray array];
-    FMResultSet *result = [database executeQuery:@"select * from rss order by pubDate desc"];
-    NSLog(@"1");
-    while ([result next])
-    {
-        RSSItem *item = [[RSSItem alloc] init];
-        item.title = [result stringForColumnIndex:0];
-        item.itemDescription = [result stringForColumnIndex:1];
-        item.content = [result stringForColumnIndex:2];
-        item.link = [NSURL URLWithString:[result stringForColumnIndex:3]];
-        item.commentsLink = [NSURL URLWithString:[result stringForColumnIndex:4]];
-        item.commentsFeed = [NSURL URLWithString:[result stringForColumnIndex:5]];
-        item.commentsCount =[NSNumber numberWithInt:[result intForColumnIndex:6]];
-        item.pubDate  = [result dateForColumnIndex:7];
-        item.author = [result stringForColumnIndex:8];
-        item.guid = [result stringForColumnIndex:9];
-        
-        [results addObject:item];
-    }
-    
-    self._newsContent = results;
-    [self.tableView reloadData];
-}
+
 
 
 @end

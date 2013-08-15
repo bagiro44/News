@@ -102,11 +102,6 @@
                                 <segue destination="Ae3-pK-Hww" kind="push" id="ZcY-fx-q2C"/>
                             </connections>
                         </barButtonItem>
-                        <barButtonItem key="rightBarButtonItem" systemItem="refresh" id="kFx-kt-s52">
-                            <connections>
-                                <action selector="refreshAction:" destination="2" id="hgd-k3-XrW"/>
-                            </connections>
-                        </barButtonItem>
                     </navigationItem>
                     <connections>
                         <outlet property="tableView" destination="XzE-OC-8ef" id="X9U-k7-nkc"/>
