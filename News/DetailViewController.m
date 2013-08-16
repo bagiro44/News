@@ -7,10 +7,11 @@
 //
 
 #import "DetailViewController.h"
-#import "RSSParser.h"
+//#import "RSSParser.h"
 #import "UIImageView+AFNetworking.h"
 #import "WebViewController.h"
 #import "EXConsts.h"
+
 
 @interface DetailViewController () <UIActionSheetDelegate>
 
@@ -33,7 +34,7 @@
     [self reloadData]; 
     
 } 
--(void)setDetail:(RSSItem *)Detail
+-(void)setDetail:(Rss *)Detail
 {
     _Detail = Detail;
     //NSLog(@"%@", _Detail.itemDescription);
@@ -76,7 +77,7 @@
 - (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender
 {
     WebViewController *controller = segue.destinationViewController;
-    controller.URL = _Detail.link ;
+    controller.URL =  [NSURL URLWithString:_Detail.link] ;
 }
 - (void)actionSheet:(UIActionSheet *)actionSheet clickedButtonAtIndex:(NSInteger)buttonIndex
 {
@@ -86,7 +87,7 @@
             [self performSegueWithIdentifier:@"OpenURL" sender:self]; 
             break;
          case 1:
-             [[UIApplication sharedApplication] openURL:_Detail.link];
+             [[UIApplication sharedApplication] openURL:[NSURL URLWithString:_Detail.link]];
              break;
             
         default:

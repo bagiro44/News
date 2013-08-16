@@ -45,14 +45,15 @@
     
     ImageCell *cell = [tableView dequeueReusableCellWithIdentifier:cellId2];
     
-    RSSItem *item = [self._newsContent objectAtIndex:indexPath.row];
+    /*RSSItem *item = [self._newsContent objectAtIndex:indexPath.row];
     cell.Text.text = item.title;
     
     NSArray *images = [item imagesFromContent];
     NSString *imagesURLString = [images objectAtIndex:0];
     NSURL *imagesURL = [NSURL URLWithString:imagesURLString];
     //[cell.]
-    [cell.Image setImageWithURL:imagesURL];
+    [cell.Image setImageWithURL:imagesURL];*/
+    cell.Text.text = @"Item";
     return cell;
 }
 

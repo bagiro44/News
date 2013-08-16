@@ -14,7 +14,8 @@
 		7742514217BCC28100BF8E77 /* DateData.m in Sources */ = {isa = PBXBuildFile; fileRef = 7742514117BCC28000BF8E77 /* DateData.m */; };
 		7742514517BCF81500BF8E77 /* Model.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 7742514317BCF81500BF8E77 /* Model.xcdatamodeld */; };
 		7742514817BCFA7000BF8E77 /* Rss.m in Sources */ = {isa = PBXBuildFile; fileRef = 7742514717BCFA7000BF8E77 /* Rss.m */; };
-		7742514B17BCFD8B00BF8E77 /* Rss+RssManaged.m in Sources */ = {isa = PBXBuildFile; fileRef = 7742514A17BCFD8B00BF8E77 /* Rss+RssManaged.m */; };
+		7742514B17BCFD8B00BF8E77 /* RssManaged.m in Sources */ = {isa = PBXBuildFile; fileRef = 7742514A17BCFD8B00BF8E77 /* RssManaged.m */; };
+		7742514D17BDCA0400BF8E77 /* CoreData.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 7742514C17BDCA0400BF8E77 /* CoreData.framework */; };
 		77C6967917B01A48009B9F06 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 77C6967817B01A48009B9F06 /* UIKit.framework */; };
 		77C6967B17B01A48009B9F06 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 77C6967A17B01A48009B9F06 /* Foundation.framework */; };
 		77C6967D17B01A48009B9F06 /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 77C6967C17B01A48009B9F06 /* CoreGraphics.framework */; };
@@ -66,8 +67,9 @@
 		7742514417BCF81500BF8E77 /* Model.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = Model.xcdatamodel; sourceTree = "<group>"; };
 		7742514617BCFA7000BF8E77 /* Rss.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Rss.h; sourceTree = "<group>"; };
 		7742514717BCFA7000BF8E77 /* Rss.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Rss.m; sourceTree = "<group>"; };
-		7742514917BCFD8B00BF8E77 /* Rss+RssManaged.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "Rss+RssManaged.h"; sourceTree = "<group>"; };
-		7742514A17BCFD8B00BF8E77 /* Rss+RssManaged.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "Rss+RssManaged.m"; sourceTree = "<group>"; };
+		7742514917BCFD8B00BF8E77 /* RssManaged.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RssManaged.h; sourceTree = "<group>"; };
+		7742514A17BCFD8B00BF8E77 /* RssManaged.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RssManaged.m; sourceTree = "<group>"; };
+		7742514C17BDCA0400BF8E77 /* CoreData.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreData.framework; path = System/Library/Frameworks/CoreData.framework; sourceTree = SDKROOT; };
 		77C6967517B01A48009B9F06 /* News.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = News.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		77C6967817B01A48009B9F06 /* UIKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = UIKit.framework; path = System/Library/Frameworks/UIKit.framework; sourceTree = SDKROOT; };
 		77C6967A17B01A48009B9F06 /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
@@ -138,6 +140,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				7742514D17BDCA0400BF8E77 /* CoreData.framework in Frameworks */,
 				7742513F17BCC0A500BF8E77 /* QuartzCore.framework in Frameworks */,
 				77D6718517BBB6280044A857 /* libsqlite3.dylib in Frameworks */,
 				77C6967917B01A48009B9F06 /* UIKit.framework in Frameworks */,
@@ -165,7 +168,6 @@
 		77C6966C17B01A48009B9F06 = {
 			isa = PBXGroup;
 			children = (
-				7742513E17BCC0A500BF8E77 /* QuartzCore.framework */,
 				77C6967E17B01A48009B9F06 /* News */,
 				77C6967717B01A48009B9F06 /* Frameworks */,
 				77C6967617B01A48009B9F06 /* Products */,
@@ -185,6 +187,8 @@
 			children = (
 				77F6D12217B4540D008A50B6 /* Libraries */,
 				77D6718417BBB6280044A857 /* libsqlite3.dylib */,
+				7742513E17BCC0A500BF8E77 /* QuartzCore.framework */,
+				7742514C17BDCA0400BF8E77 /* CoreData.framework */,
 				77C6967817B01A48009B9F06 /* UIKit.framework */,
 				77C6967A17B01A48009B9F06 /* Foundation.framework */,
 				77C6967C17B01A48009B9F06 /* CoreGraphics.framework */,
@@ -211,8 +215,8 @@
 				7742514317BCF81500BF8E77 /* Model.xcdatamodeld */,
 				7742514617BCFA7000BF8E77 /* Rss.h */,
 				7742514717BCFA7000BF8E77 /* Rss.m */,
-				7742514917BCFD8B00BF8E77 /* Rss+RssManaged.h */,
-				7742514A17BCFD8B00BF8E77 /* Rss+RssManaged.m */,
+				7742514917BCFD8B00BF8E77 /* RssManaged.h */,
+				7742514A17BCFD8B00BF8E77 /* RssManaged.m */,
 				7742514017BCC28000BF8E77 /* DateData.h */,
 				7742514117BCC28000BF8E77 /* DateData.m */,
 				77D6710A17BA58EE0044A857 /* WebViewController.h */,
@@ -423,7 +427,7 @@
 				7742514217BCC28100BF8E77 /* DateData.m in Sources */,
 				7742514517BCF81500BF8E77 /* Model.xcdatamodeld in Sources */,
 				7742514817BCFA7000BF8E77 /* Rss.m in Sources */,
-				7742514B17BCFD8B00BF8E77 /* Rss+RssManaged.m in Sources */,
+				7742514B17BCFD8B00BF8E77 /* RssManaged.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

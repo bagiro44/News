@@ -6,7 +6,7 @@
 //  Copyright (c) 2013 Dmitriy Remezov. All rights reserved.
 //
 
-#import "Rss+RssManaged.h"
+#import "RssManaged.h"
 
 @interface Rss (Private) 
 -(NSArray *)imagesFromHTMLString:(NSString *)htmlstr;

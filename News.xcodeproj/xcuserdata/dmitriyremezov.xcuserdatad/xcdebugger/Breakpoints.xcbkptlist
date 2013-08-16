@@ -8,11 +8,11 @@
          ignoreCount = "0"
          continueAfterRunningActions = "No"
          filePath = "News/DetailViewController.m"
-         timestampString = "398125612.710272"
+         timestampString = "398314362.012404"
          startingColumnNumber = "9223372036854775807"
          endingColumnNumber = "9223372036854775807"
-         startingLineNumber = "59"
-         endingLineNumber = "59"
+         startingLineNumber = "60"
+         endingLineNumber = "60"
          landmarkName = "-reloadData"
          landmarkType = "5">
       </FileBreakpoint>

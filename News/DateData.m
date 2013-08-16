@@ -7,13 +7,12 @@
 //
 
 #import "DateData.h"
-#import "FMDatabase.h"
 #import "RSSItem.h"
 #import "RSSParser.h"
 
 
 @interface DateData()
-@property (nonatomic, strong) FMDatabase *database;
+@property (nonatomic, strong, readwrite) NSManagedObjectContext *ManagedObjectContext; 
 @end
 
 
@@ -44,54 +43,36 @@
     
     NSManagedObjectModel *ObjectModel = [NSManagedObjectModel mergedModelFromBundles:nil];
     NSPersistentStoreCoordinator *StoreCoordinator = [[NSPersistentStoreCoordinator alloc] initWithManagedObjectModel:ObjectModel];
-    [StoreCoordinator addPersistentStoreWithType:NSSQLiteStoreType configuration:Nil URL:[NSURL URLWithString:dataBasePath] options:nil error:&error];
+    [StoreCoordinator addPersistentStoreWithType:NSSQLiteStoreType configuration:Nil URL:[NSURL fileURLWithPath:dataBasePath] options:nil error:&error];
     
-    
-    FMDatabase *database = [FMDatabase databaseWithPath:dataBasePath];
-    if (![database open])
-    {
-        database = nil;
-        NSLog(@"Database not open.");
-        return nil;
-    }
-    
-    self.database = database;
+    NSManagedObjectContext *ManagedObjectContext = [[NSManagedObjectContext alloc] init];
+    ManagedObjectContext.persistentStoreCoordinator = StoreCoordinator;
+    self.ManagedObjectContext = ManagedObjectContext;
     return self;
 }
 
 -(BOOL) HasCahedRssFeed
 {
-    NSInteger rowsCount = 0;
-    FMResultSet *result = [self.database executeQuery:@"select count(*) from rss"];
-    if ([result next])
-    {
-        rowsCount = [result intForColumnIndex:0];
-    }
+    NSUInteger rowsCount = 0;
+    
+    NSEntityDescription *description = [NSEntityDescription entityForName:@"Rss" inManagedObjectContext:self.ManagedObjectContext];
+    NSFetchRequest *Request = [[NSFetchRequest alloc] init];
+    Request.entity = description;
+    NSError *error =  nil;
+    rowsCount = [self.ManagedObjectContext countForFetchRequest:Request error:&error];
     return rowsCount != 0;
 }
 
 -(NSArray *) FetchCacheRssFeed
 {
-    FMDatabase *database = self.database;
-    NSMutableArray *results = [NSMutableArray array];
-    FMResultSet *result = [database executeQuery:@"select * from rss order by pubDate desc"];
-    while ([result next])
-    {
-        RSSItem *item = [[RSSItem alloc] init];
-        item.title = [result stringForColumnIndex:0];
-        item.itemDescription = [result stringForColumnIndex:1];
-        item.content = [result stringForColumnIndex:2];
-        item.link = [NSURL URLWithString:[result stringForColumnIndex:3]];
-        item.commentsLink = [NSURL URLWithString:[result stringForColumnIndex:4]];
-        item.commentsFeed = [NSURL URLWithString:[result stringForColumnIndex:5]];
-        item.commentsCount =[NSNumber numberWithInt:[result intForColumnIndex:6]];
-        item.pubDate  = [result dateForColumnIndex:7];
-        item.author = [result stringForColumnIndex:8];
-        item.guid = [result stringForColumnIndex:9];
-        
-        [results addObject:item];
-    }
+    NSEntityDescription *description = [NSEntityDescription entityForName:@"Rss" inManagedObjectContext:self.ManagedObjectContext];
+    NSSortDescriptor *sortDescriptor = [NSSortDescriptor sortDescriptorWithKey:@"pubDate" ascending:NO];
+    NSFetchRequest *Request = [[NSFetchRequest alloc] init];
+    Request.entity = description;
+    Request.sortDescriptors = @[sortDescriptor];
     
+    NSError *error =  nil;
+    NSArray *results =  [self.ManagedObjectContext executeFetchRequest:Request error:&error];
     return results; 
 }
 
@@ -105,26 +86,51 @@
     NSURL *url = [NSURL URLWithString:@"http://itdox.ru/feed/"];
     NSURLRequest *request = [NSURLRequest requestWithURL:url];
     [RSSParser parseRSSFeedForRequest:request success:^(NSArray *feedItems)
-     {
-         FMDatabase *database = self.database;
+     {  
          for (RSSItem *item in feedItems)
          {
-             NSMutableArray *parameters = [NSMutableArray arrayWithCapacity:10];
-             [parameters addObject:item.title];
-             [parameters addObject:item.itemDescription];
-             [parameters addObject:item.content];
-             [parameters addObject:[item.link  absoluteString]];
-             [parameters addObject:[item.commentsLink absoluteString]];
-             [parameters addObject:[item.commentsFeed absoluteString]];
-             [parameters addObject:item.commentsCount];
-             [parameters addObject:item.pubDate];
-             [parameters addObject:item.author];
-             [parameters addObject:item.guid ];
-             BOOL updateResult = [database executeUpdate:@"INSERT OR REPLACE INTO rss VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)" withArgumentsInArray:parameters];
-             if (!updateResult)
+             NSEntityDescription *description = [NSEntityDescription entityForName:@"Rss" inManagedObjectContext:self.ManagedObjectContext];
+             NSFetchRequest *Request = [[NSFetchRequest alloc] init];
+             NSPredicate *predicate = [NSPredicate predicateWithFormat:@"guid == %@", item.guid];
+             Request.entity = description;
+             Request.predicate = predicate;             
+             NSError *error =  nil;
+             NSArray *results =  [self.ManagedObjectContext executeFetchRequest:Request error:&error];
+             if (error)
              {
-                 NSLog(@"Failed: %@ ", [database lastError]);
+                 NSLog(@"%@", [error localizedDescription]);
+                 continue;
              }
+             
+             Rss *rss = nil;
+             if ([results count])
+             {
+                 rss = [results objectAtIndex:0];
+                 
+             }
+             else
+             {
+                 rss = [NSEntityDescription insertNewObjectForEntityForName:@"Rss" inManagedObjectContext:self.ManagedObjectContext];
+             }
+             
+             rss.title = item.title; 
+             rss.itemDescription = item.itemDescription;
+             rss.content = item.content;
+             rss.link = [item.link  absoluteString];
+             rss.commentsLink = [item.commentsLink absoluteString];
+             rss.commentsFeed = [item.commentsFeed absoluteString];
+             rss.commentsCount = item.commentsCount;
+             rss.pubDate = item.pubDate;
+             rss.author = item.author;
+             rss.guid = item.guid;
+             
+             
+             [self.ManagedObjectContext save:&error];
+             if (error)
+             {
+                 NSLog(@"%@", [error localizedDescription]); 
+             }
+             
              if (succesBlock)
              {
                  NSArray *cashedFeed = [self FetchCacheRssFeed];

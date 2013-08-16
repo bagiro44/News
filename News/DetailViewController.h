@@ -8,10 +8,11 @@
 
 #import <UIKit/UIKit.h>
 #import "RSSParser.h"
+#import "DateData.h"
 
 @interface DetailViewController : UIViewController
 
-@property (nonatomic, strong) RSSItem *Detail;
+@property (nonatomic, strong) Rss *Detail;
 @property (weak, nonatomic) IBOutlet UIImageView *newsImage;
 @property (weak, nonatomic) IBOutlet UILabel *newsName;
 @property (weak, nonatomic) IBOutlet UIScrollView *scrollView;

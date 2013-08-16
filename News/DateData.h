@@ -8,12 +8,14 @@
 
 #import <Foundation/Foundation.h>
 #import <CoreData/CoreData.h>
-#import "Rss+RssManaged.h"
+#import "RssManaged.h"
 
 typedef void(^DateDataSuccessBlock)(NSArray *result);
 typedef void(^DateDataFailureBlock)(NSError *error);
 
 @interface DateData : NSObject
+
+@property (nonatomic, strong, readonly) NSManagedObjectContext *ManagedObjectContext;
 
 +(DateData *)sharedInstance;
 
